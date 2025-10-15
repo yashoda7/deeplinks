@@ -1,0 +1,29 @@
+{
+    "project_info": {
+      "project_number": "542510204385",
+      "project_id": "cool-ecbfa",
+      "storage_bucket": "cool-ecbfa.firebasestorage.app"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:542510204385:android:fa00e9a968d96f6f09fea0",
+          "android_client_info": {
+            "package_name": "com.example.deeplinks"
+          }
+        },
+        "oauth_client": [],
+        "api_key": [
+          {
+            "current_key": "AIzaSyBL-YKv9kUhVfjoVz1sn7yKJqj-qQPzuF0"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": []
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }
