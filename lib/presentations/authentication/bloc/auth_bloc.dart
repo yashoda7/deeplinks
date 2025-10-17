@@ -17,38 +17,31 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       : super(AuthInitial()) {
     
     // ---------------- Signup ----------------
-    on<SignupEvent>((event, emit) async {
-      emit(AuthLoading());
-      try {
-        // Call use case, which returns both user and message
-        final result = await signupUseCase(event.name, event.email, event.password);
-        final user = result;        // may be null
-        final message = result.name;  // backend message
+  // inside AuthBloc
+on<SignupEvent>((event, emit) async {
+  emit(AuthLoading());
+  try {
+    final result = await signupUseCase(event.name, event.email, event.password);
+    final user = result["user"];
+    final message = result["message"];
+    emit(AuthSuccess(user: user, message: message));
+  } catch (e) {
+    emit(AuthError(e.toString()));
+  }
+});
 
-        emit(AuthSuccess(user: user, message: message));
-      } catch (e) {
-        emit(AuthError(e.toString()));
-      }
-    });
+on<LoginEvent>((event, emit) async {
+  emit(AuthLoading());
+  try {
+    final result = await loginUseCase(event.email, event.password);
+    final user = result["user"];
+    final message = result["message"];
+    emit(AuthSuccess(user: user, message: message));
+  } catch (e) {
+    emit(AuthError(e.toString()));
+  }
+});
 
-    // ---------------- Login ----------------
-    on<LoginEvent>((event, emit) async {
-      emit(AuthLoading());
-      try {
-        final result = await loginUseCase(event.email, event.password);
-        final user = result;
-        final message=result.email;
-
-        if (user != null && user.token.isNotEmpty) {
-          await _saveToken(user.token);
-          emit(AuthSuccess(user: user, message: message ?? "Login successful"));
-        } else {
-          emit(AuthError("Login failed"));
-        }
-      } catch (e) {
-        emit(AuthError(e.toString()));
-      }
-    });
   }
 
   Future<void> _saveToken(String token) async {
